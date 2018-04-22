@@ -29,12 +29,13 @@ app.get("/", (req, res) => {
 });
 
 var options = {
-url: "http://api.tcgplayer.com/catalog/products?offset=100&limit=200",
+// url: "http://api.tcgplayer.com/catalog/products?limit=100",
+url: "http://api.tcgplayer.com/pricing/product/21715",
 headers: {
 'Authorization': 'bearer LsiJ5fgX9s8liUVS6XV9Twp0CaAEZYJowUvtoIADB-p1CHoVXWy-zjGXKALMTCEPcp1IdIMJo3JHZeEfW_qYYHfP98g9B4Ao8jS3BojIGRBMqUmqJzByaEC4fHy3kGfwWMqIPhJ_WY4ErmqW4eaBa6Lrz45utHr_r4gDc9D8pEQHMJf8Fxz0-B15X5_mUmiBnDNajVK3YX4ZBZC4VGdqgAPFyFOfVE50cmxuOz9ACXN5eRTFOqvpJEnpCfnL12R5i2thMh6XDnhhfJrQp6xFio7Pyv8RqtOGay23QfyA7ElsbKWQqk2SACBnAiNMTYRZIHOltw'
-},
-qs:
- { categoryId: '2' }
+}
+// qs:
+//  { categoryId: '2' }
 }
 
 
@@ -43,9 +44,8 @@ app.get("/products", (req, res) => {
 
     var Body = (JSON.parse(body)).results;
 
-    Body.forEach(results => {
-      console.log(results.productName)
-    })
+    res.send(body);
+    // res.render('products', {test: Body});
 
     // console.log(body)
     // res.send(body)
@@ -56,6 +56,13 @@ app.get("/products", (req, res) => {
     // })
   })
 });
+
+app.get("/cards", (req, res) => {
+  var name = "Solemn Judgment";
+  request({url: "https://www.ygohub.com/api/card_info?name=" + encodeURI(name) + ""}, (error, response, body) => {
+    res.send(body);
+  })
+})
 
 app.listen(3000, () => {
   console.log("The server has started!");
